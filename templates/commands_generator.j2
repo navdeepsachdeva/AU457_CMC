@@ -1,0 +1,7 @@
+{% for nic in interfaces_list  %}
+interface {{ nic['name'] }}
+  description {{ nic['desc'] }}
+
+{% endfor  %}
+
+{# banner motd @\nHello Day1 - L\n@ #}

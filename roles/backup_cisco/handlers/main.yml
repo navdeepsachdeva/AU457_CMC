@@ -1,0 +1,15 @@
+---
+# handlers file for backup_cisco
+
+
+- name: Facts Folder Created
+  ansible.builtin.debug:
+    msg: "Folder {{ backup_cisco_local_path }} Created"
+
+- name: Facts Saved
+  ansible.builtin.debug:
+    msg: "Facts Saved in {{ backup_cisco_local_path }}/{{ inventory_hostname }}.txt"
+
+- name: Configs Backed UP
+  ansible.builtin.debug:
+    msg: "Configs Saved in {{ backup_cisco_dir_path }}/{{ inventory_hostname }}.txt"

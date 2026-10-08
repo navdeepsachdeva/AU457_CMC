@@ -1,0 +1,47 @@
+- name: Filters Demo
+  hosts: iosxe1*
+  gather_facts: false
+  # vars_files:
+  #   - vars/devices.csv
+  vars:
+    myvar: meyou
+    myips:
+      - 172.25.250.254/16
+      - 214.33.22.44/24
+      - 10.10.2.20/8
+      - 192.168.2.15/24
+      - 192.268.2.15/24
+      - fe80::a1c0:e2e5:a201:8cfa/64
+      - 100.24.45.24/8
+      - 88.22.44.55/8
+  tasks:
+
+    - name: Read device inventory from CSV
+      community.general.read_csv:
+        path: vars/devices.csv
+      register: device_data
+
+    - name: Print
+      ansible.builtin.debug:
+        msg: "{{ device_data.list | selectattr('platform', 'equalto', 'ios') | list }}"
+        # msg: "{{ device_data['list'] }}"
+        # msg: "{{ device_data }}"
+
+    - name: Print in File
+      ansible.builtin.copy:
+        content: "{{ device_data['list'] | to_nice_yaml }}"
+        dest: ./list.yml
+      # delegate_to: workstation.lab.example.com
+
+    # - name: IP Filters
+    #   ansible.builtin.debug:
+    #     msg: "{{ '192.0.2.5/24' | ansible.utils.ipaddr('next_usable') }}"
+    #     # msg: "{{ myips | ansible.utils.ipv4('revdns') }}"
+    #     # msg: "{{ myips | ansible.utils.ipv4('netmask') }}"
+    #     # msg: "{{ myips | ansible.utils.ipv4('private') }}"
+    #     # msg: "{{ myips | ansible.utils.ipv4('public') }}"
+    #     # msg: "{{ myips | ansible.utils.ipaddr | ansible.utils.ipv4 }}"
+
+    # - name: Print
+    #   ansible.builtin.debug:
+    #     msg: "{{ 'Ansible applies variable values to playbook' | upper | length  }} ++ {{ myvar | default('Not Available') }}"

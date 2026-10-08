@@ -1,0 +1,44 @@
+- name: Validate Configs
+  hosts: iosxe1*
+  gather_facts: false
+  vars_files:
+    - vars/outside_vars.yml
+  tasks:
+    - name: Audit DNS configuration drift (report only)
+      cisco.ios.ios_system:
+        name_servers: "{{ actual_dns.name_servers }}"
+        domain_search: "{{ actual_dns.domain_list }}"
+        state: present
+      register: dns_result
+    - name: Print Actual
+      ansible.builtin.debug:
+        msg: "{{ dns_result }}"
+      
+    - name: Configure correct NTP server
+      cisco.ios.ios_ntp_global:
+        config:
+          servers:
+            - server: 172.25.250.220
+        state: replaced
+
+    - name: Gather current NTP configuration
+      cisco.ios.ios_ntp_global:
+        state: gathered
+      register: current_ntp_config
+
+    - name: Print Real
+      ansible.builtin.debug:
+        msg: "{{ current_ntp_config }}"
+
+
+    - name: Audit DNS configuration drift (report only)
+      cisco.ios.ios_system:
+        name_servers: "{{ intended_dns.name_servers }}"
+        domain_search: "{{ intended_dns.domain_list }}"
+        state: present
+      check_mode: true
+      register: dns_audit_result
+
+    - name: Print Intended
+      ansible.builtin.debug:
+        msg: "{{ dns_audit_result }}"

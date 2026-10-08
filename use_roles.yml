@@ -1,0 +1,30 @@
+- name: Roles Demo
+  hosts: iosxe1*
+  gather_facts: false
+  vars_files:
+    - vars/outside_vars.yml
+
+  # Static Role
+  roles:
+    # - role: backup_cisco
+    - role: interface_cisco
+      interface_cisco_GE1_Desc: "Level Play"
+      interface_cisco_banner_text: "Level Banner"
+
+
+  tasks:
+    - name: Play Tasks - Extra Task 1
+      ansible.builtin.command: sleep 4
+      notify:
+        - Extra Play Handler
+
+    - name: Import/Include Dynamic Role
+      # ansible.builtin.import_role:
+      ansible.builtin.include_role:
+        name: config_cisco
+      when: meme is not defined
+
+  handlers:
+    - name: Extra Play Handler
+      ansible.builtin.debug:
+        msg: "Hello Play Handler"

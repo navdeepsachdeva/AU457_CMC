@@ -1,0 +1,6 @@
+---
+# defaults file for backup_cisco
+
+backup_cisco_local_path: ./info
+backup_cisco_dir_path: ./backups
+

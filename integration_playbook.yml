@@ -1,0 +1,29 @@
+
+- name: Import a Variable Playbook
+  ansible.builtin.import_playbook: variable_demo.yml
+
+- name: Large Integration Playbook
+  hosts: iosxe1*
+  gather_facts: false
+  tasks:
+    # - name: Static Import an External Task File
+    #   ansible.builtin.import_tasks:
+    #     file: tasks/external_backup.yml
+    #   when: youme is defined
+
+    # - name: Dynamic Include an External Task File
+    #   ansible.builtin.include_tasks:
+    #     file: tasks/external_interfaces.yml
+    #   when: youme is defined
+
+
+    - name: Loop Task Files
+      ansible.builtin.include_tasks:
+      # ansible.builtin.import_tasks:
+        file: "{{ item }}"
+      loop:
+        - tasks/external_backup.yml
+        - tasks/external_interfaces.yml
+
+- name: Another Playbook
+  ansible.builtin.import_playbook: linux.yml

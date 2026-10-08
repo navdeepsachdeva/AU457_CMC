@@ -1,0 +1,35 @@
+
+- name: Collect Custom Facts Manually
+  cisco.ios.ios_facts:
+    gather_network_resources: all
+    gather_subset: all
+
+
+- name: Create folder for Save Information
+  ansible.builtin.file:
+    path: ./info
+    state: directory
+    mode: '0755'
+
+
+- name: Save Facts in File
+  ansible.builtin.copy:
+    content: |
+      Net API         = {{ ansible_facts['net_api'] }}
+      Hostname        = {{ ansible_facts['net_hostname'] }}
+      IOS Type        = {{ ansible_facts['net_iostype'] }}
+      Model           = {{ ansible_facts['net_model'] }}
+      Python Version  = {{ ansible_facts['net_python_version'] }}
+      Serial Number   = {{ ansible_facts['net_serialnum'] }}
+      Net System      = {{ ansible_facts['net_system'] }}
+      Net Version     = {{ ansible_facts['net_version'] }}
+      Free Memory     = {{ ansible_facts['net_filesystems_info']['bootflash:']['spacefree_kb'] }} KB
+      Total Memory     = {{ ansible_facts['net_filesystems_info']['bootflash:']['spacetotal_kb'] }} KB
+      acls            = {{ ansible_facts['network_resources']['acls'] }}
+      HSRP Interfaces = {{ ansible_facts['network_resources']['hsrp_interfaces'] }}
+    dest: ./info/{{ inventory_hostname }}.txt
+
+
+- name: Save running configuration
+  cisco.ios.ios_config:
+    backup: true

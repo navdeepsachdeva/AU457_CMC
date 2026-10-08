@@ -1,0 +1,21 @@
+---
+# tasks file for config_cisco
+
+- name: Audit DNS configuration drift (report only)
+  cisco.ios.ios_system:
+    name_servers: "{{ actual_dns.name_servers }}"
+    domain_search: "{{ actual_dns.domain_list }}"
+    state: present
+  changed_when: true
+  notify:
+    - DNS Config Setup
+
+- name: Configure correct NTP server
+  cisco.ios.ios_ntp_global:
+    config:
+      servers:
+        - server: 172.25.250.220
+    state: replaced
+  changed_when: true
+  notify:
+    - NTP Config Setup

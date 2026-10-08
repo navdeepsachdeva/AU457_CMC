@@ -1,0 +1,31 @@
+---
+# tasks file for interface_cisco
+
+
+- name: Change GE1 Description
+  cisco.ios.ios_interfaces:
+    config:
+      - name: "{{ interface_cisco_GE1_Name }}"
+        description: "{{ interface_cisco_GE1_Desc }}"
+  changed_when: true
+  notify:
+    - GE1 Changed
+
+- name: Change GE2 Description
+  cisco.ios.ios_interfaces:
+    config:
+      - name: "{{ interface_cisco_GE2_Name }}"
+        description: "{{ interface_cisco_GE2_Desc }}"
+  changed_when: true
+  notify:
+    - GE2 Changed
+
+ 
+- name: Configure the login banner
+  cisco.ios.ios_banner:
+    banner: "{{ interface_cisco_banner_type }}"
+    text: "{{ interface_cisco_banner_text }}"
+    state: present
+  changed_when: true
+  notify:
+    - Motd Banner Changed

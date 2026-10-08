@@ -1,0 +1,39 @@
+- name: Loops Demo
+  hosts: iosxe1*
+  gather_facts: false
+  vars_files:
+    - vars/outside_vars.yml
+
+  # loop was introduced in Ansible 2.5
+  # loop only accept list/array
+  tasks:
+    - name: Print Simple List
+      ansible.builtin.debug:
+        msg: "{{ item }}"
+      loop: "{{ simple_list }}"
+      # with_items: "{{ simple_list }}"
+      
+    - name: Print Complex List
+      ansible.builtin.debug:
+        msg: "{{ item['fn'] }} -- {{ item['ln'] }}"
+      loop: "{{ complex_list }}"
+      # with_list: "{{ complex_list }}"
+
+    - name: Print User Dictionary
+      ansible.builtin.debug:
+        msg: "{{ item['key'] }} ++ {{ item['value'] }}"
+      loop: "{{ user_dict | dict2items }}"
+      # with_dict: "{{ user_dict }}"
+
+    - name: Print Sequence
+      ansible.builtin.debug:
+        msg: "{{ item }}"
+        # msg: "eth{{ item }}"
+      with_sequence: start=0 end=4 format=eth%x
+
+    - name: Print Directory Contents
+      ansible.builtin.debug:
+        msg: "{{ item }}"
+        # msg: "eth{{ item }}"
+      with_fileglob:
+        - vars/*

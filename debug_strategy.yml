@@ -1,0 +1,36 @@
+- name: CIsco Convert Ad-Hoc to Playbook
+  hosts: iosxe1*
+  gather_facts: false
+  strategy: debug
+  tasks:
+    - name: Task 1
+      ansible.builtin.command: sleep 2
+      register: output
+
+    - name: Task 20
+      ansible.builtin.debug:
+        msg: "Task 20 Done"
+
+    - name: Change GE1 Description Task 21
+      cisco.ios.ios_interfaces:
+        config:
+          - name: GigabitEthernet1
+            description: "GE1Hello{{ output.changed }}"
+
+    - name: Change GE2 Description Task 22
+      cisco.ios.ios_interfaces:
+        config:
+          - name: GigabitEthernet2
+            description: "GE2_Hello_{{ output.changed }}"
+
+    - name: Configure the login banner Task 23
+      cisco.ios.ios_banner:
+        banner: motddd
+        text: "Hello Day1 - {{ output.changed }}"
+        stateeeee: present
+      # task.args
+      # task.args['banner']='motd'
+      # task.args
+      # task.args['state']='present'
+      # del(task.args['stateeeee'])
+      # task.args

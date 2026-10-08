@@ -1,0 +1,7 @@
+interface GigabitEthernet1
+  description GE1 Template
+
+interface GigabitEthernet2
+  description GE2 Template
+
+

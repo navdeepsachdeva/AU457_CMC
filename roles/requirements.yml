@@ -1,0 +1,9 @@
+# Default galaxy.ansible.com
+
+- src: geerlingguy.php
+- src: navdeepsachdeva.windows_iis
+  name: tim_iis
+
+- src: ssh://git@utility.lab.example.com:222/student/banner
+  scm: git
+  version: main

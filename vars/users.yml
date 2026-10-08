@@ -1,0 +1,16 @@
+users:
+  - first_name: Navdeep
+    last_name: S
+    password: pass@123
+    username: nav
+    is_superuser: false
+    is_platform_auditor: false
+    organizations: IBM
+
+  - first_name: jp2
+    last_name: jp2
+    password: pass@123
+    username: jp2
+    is_superuser: false
+    is_platform_auditor: false
+    organizations: IBM

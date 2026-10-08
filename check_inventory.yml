@@ -1,0 +1,7 @@
+- name: Variables Check
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Print the Level
+      ansible.builtin.debug:
+        msg: "{{ mylevel }}"

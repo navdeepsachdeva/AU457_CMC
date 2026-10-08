@@ -1,0 +1,56 @@
+floor: "Level 14 Play vars_files"
+vlan:
+  hypervisors:
+    name: physical-servers
+    mtu: 9000
+    id: 1000
+  vms:
+    name: virtual-servers
+    mtu: 1500
+    id: 2000
+  dmz:
+    name: dmz-servers
+    mtu: 1500
+    id: 3000
+
+interfaces_list:
+  - name: GigabitEthernet1
+    desc: "GE1 Template ONE STEP"
+  - name: GigabitEthernet2
+    desc: "GE2 Template ONE STEP"
+
+
+simple_list:
+  - jp
+  - tim
+  - nav
+
+
+complex_list:
+  - fn: jp
+    ln: B 
+  - fn: tim
+    ln: K
+  - fn: nav
+    ln: S
+
+user_dict:
+  jp: B 
+  tim: K
+  nav: S
+
+actual_dns:
+  name_servers:
+    - 172.25.250.220
+    - 172.25.250.221
+    - 172.25.250.226
+  domain_list:
+    - lab.example.com
+
+
+intended_dns:
+  name_servers:
+    - 172.25.250.225
+    - 172.25.250.226
+  domain_list:
+    - lab.example.com

@@ -1,0 +1,69 @@
+- name: Variable Demo
+  hosts: cisco,arista
+  gather_facts: false
+
+  # Level 12 BAD WAY
+  vars:
+    floor: "Level 12 Play vars"
+
+  # Level 13 Dev Env Only not for Production
+  vars_prompt:
+    - name: floor
+      prompt: "Which floor are you working ?"
+      private: false
+
+  # Level 14 Static Import of Variable File
+  vars_files:
+    - vars/outside_vars.yml
+    
+  tasks:
+    - name: Read Variable File Dynamically
+      ansible.builtin.include_vars:
+        file: vars/another_vars.yml
+      when: youme is not defined
+
+    - name: Set the Variable as Ansible Fact
+      ansible.builtin.set_fact:
+        floor: "Level 19 Registered vars and set_facts"
+
+    - name: "Print Variables for {{ inventory_hostname }}"
+      ansible.builtin.debug:
+        msg: "{{ inventory_hostname }}  == {{ floor }}"
+
+    - name: Print 2 ways
+      ansible.builtin.debug:
+        msg: "{{ vlan.hypervisors.name }} ++ {{ vlan['hypervisors']['name'] }}"
+
+
+    - name: Outside Block Task 1
+      ansible.builtin.debug:
+        msg: "{{ inventory_hostname }}  == {{ floor }}"
+        
+    - name: Block of Some tasks
+      block:
+        - name: Inside Block Task 1
+          ansible.builtin.debug:
+            msg: "{{ inventory_hostname }}  == {{ floor }}"
+          vars:
+            floor: "Level 17 Task vars (for the task only)"
+
+        - name: Inside Block Task 1
+          ansible.builtin.debug:
+            msg: "{{ inventory_hostname }}  == {{ floor }}"
+      when: youme is not defined
+      vars:
+        floor: "Level 16 Block vars (for tasks in block only)"
+
+
+    - name: Outside Block Task 1
+      ansible.builtin.debug:
+        msg: "{{ inventory_hostname }}  == {{ floor }}"
+
+    # - name: Change GE1 Description
+    #   cisco.ios.ios_interfaces:
+    #     config:
+    #       - name: GigabitEthernet1
+    #         description: "{{floor }}"
+
+
+#  ansible-navigator run variable_demo.yml -e 'floor="Level 22 Global Scope GOD LEVEL"'

@@ -1,0 +1,73 @@
+- name: Block Demo
+  hosts: iosxe1*
+  gather_facts: false
+
+  tasks:
+
+    - name: Outside Block Task 1
+      ansible.builtin.debug:
+        msg: "{{ inventory_hostname }}  == {{ floor }}"
+        
+    - name: Block of Some tasks
+      when: youme is not defined
+      vars:
+        floor: "Level 16 Block vars (for tasks in block only)"
+      block:
+        - name: Inside Block Task 1
+          ansible.builtin.debug:
+            msg: "{{ inventory_hostname }}  == {{ floor }}"
+          vars:
+            floor: "Level 17 Task vars (for the task only)"
+
+        - name: Change GE1 Description
+          cisco.ios.ios_interfaces:
+            config:
+              - name: GigabitEthernet1
+                description: "GE1 NEW SETUP 1"
+   
+        - name: Configure the login banner
+          cisco.ios.ios_banner:
+            banner: motd
+            text: "Hello New DAY 1"
+            state: present
+
+        - name: Change GE2 Description
+          cisco.ios.ios_interfaces:
+            config:
+              - name: GigabitEthernet5
+                description: "GE2 New Day 1"
+
+        - name: Inside Block Task 2
+          ansible.builtin.debug:
+            msg: "{{ inventory_hostname }}  == {{ floor }}"
+      rescue:
+        - name: Restore Old Configs
+          ansible.builtin.debug:
+            msg: "MayDay Mayday GO Back to Old Configs"
+
+        - name: Change GE1 Description
+          cisco.ios.ios_interfaces:
+            config:
+              - name: GigabitEthernet1
+                description: "GE1 OLD SETUP"
+   
+        - name: Configure the login banner
+          cisco.ios.ios_banner:
+            banner: motd
+            text: "Hello OLD DAY"
+            state: present
+
+        - name: Change GE2 Description
+          cisco.ios.ios_interfaces:
+            config:
+              - name: GigabitEthernet2
+                description: "GE2 Old Again"
+      always:
+        - name: Send email to Stakeholders
+          ansible.builtin.debug:
+            msg: "Mail sent to CUstomer"
+
+    - name: Outside Block Task 2
+      ansible.builtin.debug:
+        msg: "{{ inventory_hostname }}  == {{ floor }}"
+#  ansible-navigator run variable_demo.yml -e 'floor="Level 22 Global Scope GOD LEVEL"'

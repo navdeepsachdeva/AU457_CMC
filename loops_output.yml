@@ -1,0 +1,14 @@
+- name: Loop on Output Demo
+  hosts: iosxe1*
+  gather_facts: false
+  tasks:
+    - name: Read device inventory from CSV
+      community.general.read_csv:
+        path: vars/devices.csv
+      register: device_data
+
+    - name: Print
+      ansible.builtin.debug:
+        msg: "{{ item['hostname'] }} -- {{ item['management_ip'] }}"
+      loop: "{{ device_data['list'] }}"
+

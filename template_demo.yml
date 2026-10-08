@@ -1,0 +1,39 @@
+- name: Template Demo
+  hosts: iosxe*
+  gather_facts: false
+  vars_files:
+    - vars/outside_vars.yml
+  tasks:
+
+    - name: Collect Custom Facts Manually
+      cisco.ios.ios_facts:
+        gather_network_resources: all
+        gather_subset: all
+
+
+    - name: Collect Infrastructure Information
+      ansible.builtin.template:
+        # src: templates/simple.j2
+        src: templates/collect_info.j2
+        dest: /tmp/info.html
+      delegate_to: workstation.lab.example.com
+
+    - name: Create folder for Save Commands
+      ansible.builtin.file:
+        path: configs/
+        state: directory
+        mode: '0755'
+
+    - name: Generate Commands Step 1
+      ansible.builtin.template:
+        src: templates/commands_generator.j2
+        dest: configs/{{ inventory_hostname }}.txt
+
+
+    - name: Fire Commands Step 2
+      cisco.ios.ios_config:
+        src: configs/{{ inventory_hostname }}.txt
+
+    - name: Fire Commands in One Go
+      cisco.ios.ios_config:
+        src: templates/commands_generator.j2

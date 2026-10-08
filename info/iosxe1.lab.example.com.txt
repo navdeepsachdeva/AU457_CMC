@@ -1,0 +1,12 @@
+Net API         = cliconf
+Hostname        = iosxe1.lab.example.com
+IOS Type        = IOS-XE
+Model           = C8000V
+Python Version  = 3.12.12
+Serial Number   = 98YBTV2RGCJ
+Net System      = ios
+Net Version     = 17.18.02
+Free Memory     = 2826880.0 KB
+Total Memory     = 5052064.0 KB
+acls            = [{'afi': 'ipv4', 'acls': [{'name': 'meraki-fqdn-dns', 'acl_type': 'extended'}]}]
+HSRP Interfaces = [{'name': 'Loopback0'}, {'name': 'GigabitEthernet1'}, {'name': 'GigabitEthernet2'}]

@@ -1,0 +1,39 @@
+- name: CISCO IOSXE1 to Playbook
+  hosts: iosxe1*
+  gather_facts: false
+
+  tasks:
+    - name: Configure the login banner
+      cisco.ios.ios_banner:
+        banner: motd
+        text: "Hello Day2 - B"
+        state: present
+
+
+- name: Convert Ad-Hoc to Playbook
+  hosts: aap*
+  gather_facts: false
+  remote_user: devops
+  become: false
+
+  tasks:
+    - name: Create a File 1 in /tmp
+      ansible.builtin.copy:
+        dest: /tmp/f1
+        content: This system is restricted to authorized users. Unauthorized access is prohibited. If you are unauthorized, terminate access now.
+
+    - name: Create a File 2 in /tmp
+      ansible.builtin.copy:
+        dest: /tmp/f2
+        content: >
+          This system is restricted to authorized users.
+          Unauthorized access is prohibited.
+          If you are unauthorized, terminate access now.
+
+    - name: Create a File 3 in /tmp
+      ansible.builtin.copy:
+        dest: /tmp/f3
+        content: |
+          This system is restricted to authorized users.
+          Unauthorized access is prohibited.
+          If you are unauthorized, terminate access now.

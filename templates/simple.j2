@@ -1,0 +1,25 @@
+
+<html>
+<head>
+<title> Systems Infrastructure </title>
+</head>
+
+<body>
+# Generating Information for {{ inventory_hostname }}<br/>
+<h4>
+  Host		= {{ inventory_hostname }}<br/>
+  Net API         = {{ ansible_facts['net_api'] }}<br/>
+  Hostname        = {{ ansible_facts['net_hostname'] }}<br/>
+  IOS Type        = {{ ansible_facts['net_iostype'] }}<br/>
+  Model           = {{ ansible_facts['net_model'] }}<br/>
+  Python Version  = {{ ansible_facts['net_python_version'] }}<br/>
+  Serial Number   = {{ ansible_facts['net_serialnum'] }}<br/>
+  Net System      = {{ ansible_facts['net_system'] }}<br/>
+  Net Version     = {{ ansible_facts['net_version'] }}<br/>
+  Free Memory     = {{ ansible_facts['net_filesystems_info']['bootflash:']['spacefree_kb'] }} KB<br/>
+  Total Memory     = {{ ansible_facts['net_filesystems_info']['bootflash:']['spacetotal_kb'] }}KB <br/>
+  acls            = {{ ansible_facts['network_resources']['acls'] }}<br/>
+  HSRP Interfaces = {{ ansible_facts['network_resources']['hsrp_interfaces'] }}<br/>
+</h4>
+</body>
+</html>

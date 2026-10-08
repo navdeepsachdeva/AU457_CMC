@@ -1,0 +1,13 @@
+---
+# defaults file for interface_cisco
+
+
+
+interface_cisco_GE1_Name: GigabitEthernet1
+interface_cisco_GE1_Desc: "Level2_Defaults_GE1"
+
+interface_cisco_GE2_Name: GigabitEthernet2
+interface_cisco_GE2_Desc: "Level2_Defaults_GE2"
+
+interface_cisco_banner_type: motd
+interface_cisco_banner_text: "Level2 Motd Banner"

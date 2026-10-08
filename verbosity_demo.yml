@@ -1,0 +1,28 @@
+- name: CIsco Convert Ad-Hoc to Playbook
+  hosts: iosxe1*
+  gather_facts: false
+  become_method: ansible.netcommon.enable
+  tasks:
+    - name: Change GE1 Description
+      cisco.ios.ios_interfaces:
+        config:
+          - name: GigabitEthernet1
+            description: "GE1 Hello Day 11"
+      register: tim_capture
+
+    - name: Print Previous Task Full Information
+      ansible.builtin.debug:
+        verbosity: 2
+        var: tim_capture
+        # msg: "HELLO ME {{ tim_capture }}"
+
+
+    - name: Print Previous Task Selected Information
+      ansible.builtin.debug:
+        msg: "{{ tim_capture.changed }} ++ {{ tim_capture.commands }}"
+
+    - name: Configure the login banner
+      cisco.ios.ios_banner:
+        banner: motd
+        text: "Hello Day1 - L"
+        state: present

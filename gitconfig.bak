@@ -1,0 +1,11 @@
+[user]
+	name = Student User
+	email = student@lab.example.com
+[push]
+	default = simple
+[credential "http://utility.lab.example.com:3000"]
+	username = student
+[credential]
+	helper = cache --timeout=7200
+[safe]
+	directory = /home/student/.cache/uv/archive-v0/LNMERggKApurYDiZToKMc/lib/python3.11/site-packages/au0033l/materials/git_repos/snmp

@@ -1,0 +1,12 @@
+-   hostname: router1
+    management_ip: 10.0.1.1
+    platform: ios
+    site: datacenter-a
+-   hostname: switch1
+    management_ip: 10.0.2.1
+    platform: junos
+    site: datacenter-b
+-   hostname: router2
+    management_ip: 10.0.1.2
+    platform: ios
+    site: datacenter-a

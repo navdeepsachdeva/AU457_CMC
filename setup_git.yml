@@ -1,0 +1,21 @@
+- name: Setup Git with new lab parameters
+  hosts: workstation*
+  tasks:
+  - name:  git values
+    community.general.git_config:
+      name: "{{ item.name }}"
+      scope: global
+      value: "{{ item.value }}"
+    loop:
+    - name: user.name
+      value: 'Student User'
+    - name: user.email
+      value: student@lab.example.com
+    - name: push.default
+      value: simple
+    - name: credential.helper
+      value: cache --timeout=7200
+    - name: credential.http://utility.lab.example.com:3000.username
+      value: student
+    - name: safe.directory
+      value: /home/student/.cache/uv/archive-v0/LNMERggKApurYDiZToKMc/lib/python3.11/site-packages/au0033l/materials/git_repos/snmp

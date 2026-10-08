@@ -1,0 +1,17 @@
+- name: External Roles Test
+  hosts: iosxe1*
+  gather_facts: false
+  roles:
+    # - role: tim_iis
+    #   me: you
+
+    - role: banner
+    # - role: geerlingguy.php
+  tasks:
+    - name: First Role
+      ansible.builtin.import_role:
+        name: cisco.catalystwan.health_checks
+
+    - name: Second Role
+      ansible.builtin.import_role:
+        name: network.base.gather

@@ -1,0 +1,10 @@
+---
+# handlers file for config_cisco
+
+- name: DNS Config Setup
+  ansible.builtin.debug:
+    msg: "DNS Config Setup Success"
+
+- name: NTP Config Setup
+  ansible.builtin.debug:
+    msg: "NTP Config Setup Success"

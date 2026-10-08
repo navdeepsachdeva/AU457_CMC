@@ -1,0 +1,21 @@
+- name: Convert Ad-Hoc to Playbook
+  hosts: aap*
+  gather_facts: false
+  # remote_user: devops
+  become: false
+  vars:
+    ansible_user: devops
+
+  tasks:
+    - name: Install Software vsftpd
+      become: true
+      ansible.builtin.dnf:
+        name: vsftpd
+        state: present
+      
+    - name: Create a File in /tmp
+      ansible.builtin.copy:
+        dest: /tmp/f1
+        content: "Hello CMC2"
+      # ansible.builtin.copy: dest=/tmp/f1 content="Hello CMC 1"
+

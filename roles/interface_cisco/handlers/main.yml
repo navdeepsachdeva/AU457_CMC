@@ -1,0 +1,14 @@
+---
+# handlers file for interface_cisco
+
+- name: GE1 Changed
+  ansible.builtin.debug:
+    msg: "GE 1 Changed Successfully"
+
+- name: GE2 Changed
+  ansible.builtin.debug:
+    msg: "GE 1 Changed Successfully"
+
+- name: Motd Banner Changed
+  ansible.builtin.debug:
+    msg: "MOTD Changed Successfully"

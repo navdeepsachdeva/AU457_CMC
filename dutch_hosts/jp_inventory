@@ -1,0 +1,55 @@
+# INI Format Inventory File ##
+
+# utility.lab.example.com
+
+[all:vars]
+floor="Level 3 Inventory file or script group vars"
+
+[cisco]
+iosxe1.lab.example.com
+iosxe2.lab.example.com floor="Level 8 Inventory file or script host vars "
+172.25.250.20
+172.25.250.21
+
+
+[arista]
+arista1.lab.example.com
+arista2.lab.example.com
+
+[stockholm:children]
+cisco
+arista
+
+
+[juniper]
+junos1.lab.example.com
+junos2.lab.example.com
+
+# [cisco:vars]
+# ansible_connection=ansible.netcommon.network_cli
+# ansible_network_os=cisco.ios.ios
+# 
+# [arista:vars]
+# ansible_connection=ansible.netcommon.network_cli
+# ansible_network_os=arista.eos.eos
+# 
+# [juniper:vars]
+# ansible_connection=local
+
+# Till 2.5
+# ansible_connection=ansible.netcommon.netconf
+# ansible_network_os=junipernetworks.junos.junos
+
+[control]
+workstation.lab.example.com
+
+[aap]
+aap.lab.example.com
+#ansible_user=devops
+
+
+# [range]
+# 192.168.[1:4].[5:50:10] me=you
+# server[A:F].example.com
+
+

@@ -1,0 +1,4 @@
+---
+# vars file for interface_cisco
+
+interface_cisco_GE2_Desc: "Level-15_Vars_GE2"

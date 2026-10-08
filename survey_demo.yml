@@ -1,0 +1,16 @@
+- name: Survey Demo
+  hosts: cisco,arista
+  gather_facts: false
+
+
+  # Level 13 Dev Env Only not for Production
+  # NOT Compatible with Ansible Controller GUI
+  # vars_prompt:
+  #   - name: fav_color
+  #     prompt: "Which is your fav color?"
+  #     private: false
+
+  tasks:
+    - name: "Print Variables for {{ inventory_hostname }}"
+      ansible.builtin.debug:
+        msg: "{{ user_name }}  == {{ fav_color }} "

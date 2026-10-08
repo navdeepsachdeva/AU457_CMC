@@ -1,0 +1,46 @@
+- name: changed_when Handlers Playbook
+  hosts: iosxe1*
+  gather_facts: false
+  tasks:
+    - name: Change GE1 Description
+      cisco.ios.ios_interfaces:
+        config:
+          - name: GigabitEthernet1
+            description: "GE1 Hello 3"
+      register: captured
+      changed_when: captured.changed == false
+      notify:
+        - GE1 Changed
+        - Configure the login banner
+
+    - name: Print
+      ansible.builtin.debug:
+        msg: "{{ inventory_hostname }}"
+
+    - name: Change GE2 Description
+      cisco.ios.ios_interfaces:
+        config:
+          - name: GigabitEthernet2
+            description: "GE2 Hello 3"
+      notify:
+        - GE2 Changed
+        - Configure the login banner
+
+  handlers:
+    - name: Extra
+      ansible.builtin.debug:
+        msg: "There for no reason"
+
+    - name: GE2 Changed
+      ansible.builtin.debug:
+        msg: "GE 1 Changed Successfully"
+
+    - name: GE1 Changed
+      ansible.builtin.debug:
+        msg: "GE 1 Changed Successfully"
+
+    - name: Configure the login banner
+      cisco.ios.ios_banner:
+        banner: motd
+        text: "Hello Day1 - L"
+        state: present

@@ -1,0 +1,52 @@
+- name: CIsco Convert Ad-Hoc to Playbook
+  hosts: iosxe1*
+  gather_facts: false
+  vars:
+    network_os:
+      - ios
+      - eos
+      - junos
+
+  tasks:
+    - name: Collect Facts
+      cisco.ios.ios_facts:
+        gather_network_resources: all
+
+    - name: Configure the login banner
+      cisco.ios.ios_banner:
+        banner: motd
+        text: "Hello Day3 - DONE"
+        state: present
+      register: captured
+
+    - name: Print Output
+      ansible.builtin.debug:
+        var: captured
+      # failed_when: captured.changed == false
+
+    # - name: Stop Playbook via fail module
+    #   ansible.builtin.fail:
+    #     msg: "Banner Did not setup Properly"
+    #   when: captured.changed == false
+
+    - name: Stop Playbook via assert module
+      ansible.builtin.assert:
+        that:
+          - captured.changed == true
+          - ansible_facts['net_system'] in network_os
+        fail_msg: "Banner Did not setup Properly"
+        success_msg: "Fantastic All Good"
+
+
+    - name: Change GE1 Description
+      cisco.ios.ios_interfaces:
+        config:
+          - name: GigabitEthernet1
+            description: "GE1 Hello"
+
+    - name: Change GE2 Description
+      cisco.ios.ios_interfaces:
+        config:
+          - name: GigabitEthernet2
+            description: "GE2 Hello Hello"
+

@@ -1,0 +1,6 @@
+---
+- name: Create a Cisco IOS banner
+  cisco.ios.ios_banner:
+    text: "{{ banner_text }}"
+    banner: "{{ banner_type }}"
+    state: present

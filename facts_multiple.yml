@@ -1,0 +1,32 @@
+- name: Gather facts from Cisco IOS devices
+  hosts: cisco,junos1*
+  gather_facts: false
+  tasks:
+    - name: Gather IOS facts
+      cisco.ios.ios_facts:
+        gather_subset:
+          - all
+      register: cisco_facts
+      when: inventory_hostname in groups["cisco"]
+
+    - name: Display facts
+      ansible.builtin.debug:
+        var: cisco_facts
+      when: inventory_hostname in groups["cisco"]
+
+    - name: Gather Junos facts
+      juniper.device.facts:
+      register: junos_facts
+      when: inventory_hostname == "junos1.lab.example.com" 
+
+    - name: Display facts
+      ansible.builtin.debug:
+        msg: "{{ junos_facts }}"
+      when: inventory_hostname == "junos1.lab.example.com" 
+
+    - name: Store Junos facts
+      ansible.builtin.copy:
+        content: "{{ junos_facts | to_nice_yaml }}"
+        dest: /tmp/{{ inventory_hostname }}.txt
+      delegate_to: workstation.lab.example.com
+      when: inventory_hostname == "junos1.lab.example.com" 

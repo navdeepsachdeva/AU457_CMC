@@ -1,0 +1,27 @@
+galaxy_info:
+  author: Tim K
+  description: Tested
+  company: ABC INC (optional)
+
+  license: license (GPL-2.0-or-later, MIT, etc)
+
+  min_ansible_version: 2.1
+
+  # platforms:
+  # - name: Fedora
+  #   versions:
+  #   - all
+  #   - 25
+  # - name: SomePlatform
+  #   versions:
+  #   - all
+  #   - 1.0
+  #   - 7
+  #   - 99.99
+
+  galaxy_tags: []
+
+dependencies:
+  - role: backup_cisco
+  # - role: ROLE2
+  # - role: ROLE3
